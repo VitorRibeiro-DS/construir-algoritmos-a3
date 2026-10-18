@@ -46,7 +46,6 @@ onibus = posicoes["vs"]
 
 print("Ônibus encontrados:", len(onibus))
 
-# 5. Criar o mapa
 if paradas:
     centro = paradas[0]
 elif onibus:
@@ -74,7 +73,6 @@ for i in onibus:
         icon=Icon(color="red")
     ).add_to(m)
 
-# 6. Salvar e abrir o mapa
 m.save("mapa_onibus.html")
 m.show_in_browser()
 
