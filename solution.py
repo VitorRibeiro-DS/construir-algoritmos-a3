@@ -1,10 +1,8 @@
-
 import os
 import requests
 from dotenv import load_dotenv
 from folium import Map, Marker, Icon
 
-# 1. Autenticação
 load_dotenv(".env")
 
 url = "https://api.olhovivo.sptrans.com.br/v2.1"
@@ -20,7 +18,6 @@ if res.json() != True:
 
 print("Autenticado com sucesso!")
 
-# 2. Buscar linha
 res = s.get(
     f"{url}/Linha/Buscar?termosBusca=118Y"
 )
@@ -33,8 +30,6 @@ if not linhas:
 codigo = linhas[0]["cl"]
 
 print("Código da linha:", codigo)
-
-# 3. Buscar paradas
 res = s.get(
     f"{url}/Parada/BuscarParadasPorLinha?codigoLinha={codigo}"
 )
@@ -42,8 +37,6 @@ res = s.get(
 paradas = res.json()
 
 print("Paradas encontradas:", len(paradas))
-
-# 4. Buscar posições dos ônibus
 res = s.get(
     f"{url}/Posicao/Linha?codigoLinha={codigo}"
 )
@@ -67,7 +60,6 @@ m = Map(
     tiles="OpenStreetMap"
 )
 
-# Pins azuis para as paradas
 for i in paradas:
     Marker(
         location=[i["py"], i["px"]],
@@ -75,7 +67,6 @@ for i in paradas:
         icon=Icon(color="blue")
     ).add_to(m)
 
-# Pins vermelhos para os ônibus
 for i in onibus:
     Marker(
         location=[i["py"], i["px"]],
